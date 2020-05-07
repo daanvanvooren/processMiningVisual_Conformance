@@ -1,0 +1,25 @@
+{
+    "visual": {
+        "name": "processMiningVisual_Conformance",
+        "displayName": "processMiningVisual_Conformance",
+        "guid": "processMiningVisualConformance71464C2902E34EA4B05F79AA8FC74B98",
+        "visualClassName": "Visual",
+        "version": "1.0.0",
+        "description": "Custom Process Mining Conformance Visual for delaware (bachelor thesis)",
+        "supportUrl": "https://github.com/daanvanvooren/processMiningVisual_Discovery",
+        "gitHubUrl": "https://github.com/daanvanvooren/processMiningVisual_Discovery"
+    },
+    "apiVersion": "2.6.0",
+    "author": {
+        "name": "Daan Van Vooren",
+        "email": "daanvanvooren@gmail.com"
+    },
+    "assets": {
+        "icon": "assets/icon.png"
+    },
+    "externalJS": null,
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": null,
+    "stringResources": []
+}
