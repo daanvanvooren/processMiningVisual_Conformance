@@ -1,11 +1,6 @@
 {
     "dataRoles": [
         {
-            "name": "id",
-            "kind": "GroupingOrMeasure",
-            "displayName": "ID"
-        },
-        {
             "name": "caseId",
             "kind": "GroupingOrMeasure",
             "displayName": "CaseID"
@@ -21,9 +16,9 @@
             "displayName": "Variant"
         },
         {
-            "name": "vendor",
+            "name": "specification",
             "kind": "GroupingOrMeasure",
-            "displayName": "Vendor"
+            "displayName": "Specification"
         }
     ],
     "objects": {},
@@ -32,11 +27,6 @@
             "table": {
                 "rows": {
                     "select": [
-                        {
-                            "for": {
-                                "in": "id"
-                            }
-                        },
                         {
                             "for": {
                                 "in": "caseId"
@@ -54,7 +44,7 @@
                         },
                         {
                             "for": {
-                                "in": "vendor"
+                                "in": "specification"
                             }
                         }
                     ],
