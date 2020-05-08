@@ -1,35 +1,68 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
-            "kind": "Grouping"
+            "name": "id",
+            "kind": "GroupingOrMeasure",
+            "displayName": "ID"
         },
         {
-            "displayName": "Measure Data",
-            "name": "measure",
-            "kind": "Measure"
+            "name": "caseId",
+            "kind": "GroupingOrMeasure",
+            "displayName": "CaseID"
+        },
+        {
+            "name": "isHappyPath",
+            "kind": "GroupingOrMeasure",
+            "displayName": "Is Happy Path"
+        },
+        {
+            "name": "variant",
+            "kind": "GroupingOrMeasure",
+            "displayName": "Variant"
+        },
+        {
+            "name": "vendor",
+            "kind": "GroupingOrMeasure",
+            "displayName": "Vendor"
         }
     ],
+    "objects": {},
     "dataViewMappings": [
         {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
+            "table": {
+                "rows": {
                     "select": [
                         {
-                            "bind": {
-                                "to": "measure"
+                            "for": {
+                                "in": "id"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "caseId"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "isHappyPath"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "variant"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "vendor"
                             }
                         }
-                    ]
+                    ],
+                    "dataReductionAlgorithm": {
+                        "top": {
+                            "count": 30000
+                        }
+                    }
                 }
             }
         }
