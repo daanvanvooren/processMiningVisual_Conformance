@@ -36,14 +36,14 @@ import * as d3 from "d3";
 import { map } from "d3";
 type Selection<T extends d3.BaseType> = d3.Selection<T, any, any, any>;
 
-enum violationType {
+enum ViolationType {
     Missing = "MISSING",
     Did = "DID",
 }
 
 export interface Violation {
     key: string;
-    violationType: violationType;
+    violationType: ViolationType;
     violationActivity: string;
     caseIds: Array<Number>;
     specifications: Map<string, Specification>;
@@ -57,8 +57,16 @@ export interface Specification {
 export class Visual implements IVisual {
     private violations: Map<string, Violation> = new Map();
 
-    constructor(options: VisualConstructorOptions) {
+    //Plot
+    private svg: Selection<SVGElement>;
+    private container: Selection<SVGElement>;
 
+    constructor(options: VisualConstructorOptions) {
+        this.svg = d3.select(options.element)
+            .append('svg')
+            .classed('circleCard', true);
+        this.container = this.svg.append("g")
+            .classed('container', true);
     }
 
     public update(options: VisualUpdateOptions) {
@@ -87,6 +95,9 @@ export class Visual implements IVisual {
 
             // Log violations
             console.log(this.violations);
+
+            // Plot violations
+            this.plotViolations(this.violations, table, options);
         }
     }
 
@@ -94,8 +105,9 @@ export class Visual implements IVisual {
         let happyPathArray = [];
         table.rows.forEach(row => {
             let ihp = row[1] + '';
+            let ichp = row[3] + '';
             let variant = row[2] + '';
-            if (ihp.toString() === 'true') {
+            if (ihp.toString() === 'Yes' || ichp.toString() === 'Yes') {
                 happyPathArray = variant.toString().split('->');
             }
         });
@@ -106,7 +118,7 @@ export class Visual implements IVisual {
         table.rows.forEach(row => {
             let caseId = +row[0];
             let variant = row[2] + '';
-            let specification = row[3] + '';
+            let specification = row[4] + '';
 
             let violationsKeys = this.getViolationPerCase(variant.toString(), happyPathArray);
 
@@ -156,11 +168,75 @@ export class Visual implements IVisual {
 
         for (let i = 0; i < violations.length; i++) {
             if (happyPathArray.indexOf(violations[i]) !== -1) {
-                violations[i] = ([violationType.Missing, violations[i]]);
+                violations[i] = ([ViolationType.Missing, violations[i]]);
             } else {
-                violations[i] = ([violationType.Did, violations[i]]);
+                violations[i] = ([ViolationType.Did, violations[i]]);
             }
         }
         return violations;
+    }
+
+    private plotViolations(violations: Map<string, Violation>, table: powerbi.DataViewTable, options: VisualUpdateOptions) {
+        //Tooltip
+        let divTooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        this.container.html("");
+        let width: number = options.viewport.width;
+        let height: number = options.viewport.height;
+        this.svg.attr("width", width);
+        this.svg.attr("height", height);
+
+        let fontSizeValue: number = Math.min(width, height) / 20;
+        let counter = 1;
+
+        violations.forEach(v => {
+            if (counter <= 19) {
+                let violationString = Math.trunc(v.caseIds.length / table.rows.length * 100) + '% of cases ' +
+                    (v.violationType == ViolationType.Missing ? 'is ' : '') +
+                    v.violationType + ' ' + v.violationActivity
+                let specificationsString = this.makeSpecificationTooltip(v.specifications, v.caseIds.length);
+
+
+                let textValue = this.container.append("text")
+                    .classed("textValue", true)
+                    .on("mouseover", function (d) {
+                        divTooltip.transition()
+                            .duration(200)
+                            .style("opacity", 1);
+                        divTooltip.html(violationString + "<br/>" + "<br/>"
+                            + specificationsString
+                        )
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function (d) {
+                        divTooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+
+                textValue
+                    .text(violationString)
+                    .attr("x", 50)
+                    .attr("y", counter * fontSizeValue)
+                    .attr("dy", "0.50em")
+                    .style("font-size", fontSizeValue + "px");
+            }
+            counter++;
+        });
+    }
+
+    private makeSpecificationTooltip(specifications: Map<string, Specification>, amount: number) {
+        let specArray = [];
+        let outputString = "";
+        specifications.forEach(s => {
+            specArray.push([s.name, s.caseIds]);
+        });
+        specArray.slice(0, 10).forEach(s => {
+            outputString += (Math.trunc(s[1].length / amount * 100) + '% ' + s[0] + "<br/>");
+        });
+        return outputString;
     }
 }

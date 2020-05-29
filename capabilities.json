@@ -16,6 +16,11 @@
             "displayName": "Variant"
         },
         {
+            "name": "customHappyPaths",
+            "kind": "GroupingOrMeasure",
+            "displayName": "CustomHappyPaths"
+        },
+        {
             "name": "specification",
             "kind": "GroupingOrMeasure",
             "displayName": "Specification"
@@ -44,6 +49,11 @@
                         },
                         {
                             "for": {
+                                "in": "customHappyPaths"
+                            }
+                        },
+                        {
+                            "for": {
                                 "in": "specification"
                             }
                         }
@@ -56,5 +66,14 @@
                 }
             }
         }
-    ]
+    ],
+    "tooltips": {
+        "supportedTypes": {
+            "default": true,
+            "canvas": true
+        },
+        "roles": [
+            "tooltips"
+        ]
+    }
 }
