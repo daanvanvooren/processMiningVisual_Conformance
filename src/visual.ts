@@ -57,7 +57,6 @@ export interface Specification {
 export class Visual implements IVisual {
     private violations: Map<string, Violation> = new Map();
 
-    //Plot
     private svg: Selection<SVGElement>;
     private container: Selection<SVGElement>;
 
@@ -105,9 +104,8 @@ export class Visual implements IVisual {
         let happyPathArray = [];
         table.rows.forEach(row => {
             let ihp = row[1] + '';
-            let ichp = row[3] + '';
             let variant = row[2] + '';
-            if (ihp.toString() === 'Yes' || ichp.toString() === 'Yes') {
+            if (ihp.toString().toLowerCase() === 'yes') {
                 happyPathArray = variant.toString().split('->');
             }
         });
@@ -118,11 +116,11 @@ export class Visual implements IVisual {
         table.rows.forEach(row => {
             let caseId = +row[0];
             let variant = row[2] + '';
-            let specification = row[4] + '';
+            let specification = row[3] + '';
 
-            let violationsKeys = this.getViolationPerCase(variant.toString(), happyPathArray);
+            let violations = this.getViolationPerCase(variant.toString(), happyPathArray);
 
-            violationsKeys.forEach(keyArray => {
+            violations.forEach(keyArray => {
                 let key = keyArray[0] + ':' + keyArray[1];
 
                 if (this.violations.has(key)) {

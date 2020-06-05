@@ -16,11 +16,6 @@
             "displayName": "Variant"
         },
         {
-            "name": "customHappyPaths",
-            "kind": "GroupingOrMeasure",
-            "displayName": "CustomHappyPaths"
-        },
-        {
             "name": "specification",
             "kind": "GroupingOrMeasure",
             "displayName": "Specification"
@@ -45,11 +40,6 @@
                         {
                             "for": {
                                 "in": "variant"
-                            }
-                        },
-                        {
-                            "for": {
-                                "in": "customHappyPaths"
                             }
                         },
                         {
