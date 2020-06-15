@@ -92,9 +92,6 @@ export class Visual implements IVisual {
                     .sort((a, b) => b[1].caseIds.length - a[1].caseIds.length));
             });
 
-            // Log violations
-            console.log(this.violations);
-
             // Plot violations
             this.plotViolations(this.violations, table, options);
         }
@@ -153,15 +150,15 @@ export class Visual implements IVisual {
         let variantArray = variant.toString().split('->');
         variantArray = variantArray.map(a => a.trim());
 
-        let set1 = new Set(happyPathArray);
-        let set2 = new Set(variantArray);
+        let happyPathSet = new Set(happyPathArray);
+        let variantSet = new Set(variantArray);
         let violations = [];
 
-        set1.forEach(function (val) {
-            if (!set2.has(val)) violations.push(val);
+        happyPathSet.forEach(function (val) {
+            if (!variantSet.has(val)) violations.push(val);
         });
-        set2.forEach(function (val) {
-            if (!set1.has(val)) violations.push(val);
+        variantSet.forEach(function (val) {
+            if (!happyPathSet.has(val)) violations.push(val);
         });
 
         for (let i = 0; i < violations.length; i++) {
