@@ -63,9 +63,7 @@ export class Visual implements IVisual {
     constructor(options: VisualConstructorOptions) {
         this.svg = d3.select(options.element)
             .append('svg')
-            .classed('circleCard', true);
         this.container = this.svg.append("g")
-            .classed('container', true);
     }
 
     public update(options: VisualUpdateOptions) {
