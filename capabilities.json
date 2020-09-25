@@ -1,69 +1,67 @@
 {
-    "dataRoles": [
-        {
-            "name": "caseId",
-            "kind": "GroupingOrMeasure",
-            "displayName": "CaseID"
-        },
-        {
-            "name": "isHappyPath",
-            "kind": "GroupingOrMeasure",
-            "displayName": "Is Happy Path"
-        },
-        {
-            "name": "variant",
-            "kind": "GroupingOrMeasure",
-            "displayName": "Variant"
-        },
-        {
-            "name": "specification",
-            "kind": "GroupingOrMeasure",
-            "displayName": "Specification"
-        }
-    ],
-    "objects": {},
-    "dataViewMappings": [
-        {
-            "table": {
-                "rows": {
-                    "select": [
-                        {
-                            "for": {
-                                "in": "caseId"
-                            }
-                        },
-                        {
-                            "for": {
-                                "in": "isHappyPath"
-                            }
-                        },
-                        {
-                            "for": {
-                                "in": "variant"
-                            }
-                        },
-                        {
-                            "for": {
-                                "in": "specification"
-                            }
-                        }
-                    ],
-                    "dataReductionAlgorithm": {
-                        "top": {
-                            "count": 30000
-                        }
-                    }
-                }
-            }
-        }
-    ],
-    "tooltips": {
-        "supportedTypes": {
-            "default": true,
-            "canvas": true
-        },
-        "roles": [
-            "tooltips"
-        ]
+  "dataRoles": [
+    {
+      "name": "caseId",
+      "kind": "GroupingOrMeasure",
+      "displayName": "CaseID"
+    },
+    {
+      "name": "isHappyPath",
+      "kind": "GroupingOrMeasure",
+      "displayName": "Is Happy Path"
+    },
+    {
+      "name": "variant",
+      "kind": "GroupingOrMeasure",
+      "displayName": "Variant"
+    },
+    {
+      "name": "specification",
+      "kind": "GroupingOrMeasure",
+      "displayName": "Specification"
     }
+  ],
+  "objects": {},
+  "dataViewMappings": [
+    {
+      "table": {
+        "rows": {
+          "select": [
+            {
+              "for": {
+                "in": "caseId"
+              }
+            },
+            {
+              "for": {
+                "in": "isHappyPath"
+              }
+            },
+            {
+              "for": {
+                "in": "variant"
+              }
+            },
+            {
+              "for": {
+                "in": "specification"
+              }
+            }
+          ],
+          "dataReductionAlgorithm": {
+            "window": {
+              "count": 30000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "tooltips": {
+    "supportedTypes": {
+      "default": true,
+      "canvas": true
+    },
+    "roles": ["tooltips"]
+  }
 }
