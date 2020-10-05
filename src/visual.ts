@@ -203,7 +203,7 @@ export class Visual implements IVisual {
   }
 
   private getViolationPerCase(variant: string, happyPathArray: Array<string>) {
-    let variantArray = variant.toString().split("->");
+    let variantArray = variant.toString().split(",");
     variantArray = variantArray.map((a) => a.trim());
 
     let happyPathSet = new Set(happyPathArray);
