@@ -6,9 +6,9 @@
       "displayName": "CaseID"
     },
     {
-      "name": "isHappyPath",
+      "name": "happyPathVariant",
       "kind": "GroupingOrMeasure",
-      "displayName": "Is Happy Path"
+      "displayName": "Happy Path Variant"
     },
     {
       "name": "variant",
@@ -34,7 +34,7 @@
             },
             {
               "for": {
-                "in": "isHappyPath"
+                "in": "happyPathVariant"
               }
             },
             {

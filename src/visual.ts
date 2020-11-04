@@ -96,13 +96,7 @@ export class Visual implements IVisual {
     let table = options.dataViews[0].table;
 
     // Get happy path array
-    let happyPathArray = [
-      "Create Purchase Order Item",
-      "Receive Order Confirmation",
-      "Record Goods Receipt",
-      "Record Invoice Receipt",
-      "Pay Invoice",
-    ];
+    let happyPathArray = this.getHappyPathArray(table);
 
     let rowCount = options.dataViews[0].table.rows.length;
 
@@ -145,19 +139,11 @@ export class Visual implements IVisual {
     }
   }
 
-  // private getHappyPathArray(table: powerbi.DataViewTable) {
-  //   let happyPathArray = [];
-  //   table.rows.forEach((row) => {
-  //     console.log(row);
-  //     let ihp = row[1] + "";
-  //     let variant = row[2] + "";
-  //     if (ihp) {
-  //       happyPathArray = variant.toString().split("->");
-  //     }
-  //   });
-  //   console.log(happyPathArray);
-  //   return happyPathArray.map((a) => a.trim());
-  // }
+  private getHappyPathArray(table: powerbi.DataViewTable) {
+    let happyPath = table.rows[0][1] + "";
+    let happyPathArray = happyPath.toString().split(",");
+    return happyPathArray.map((a) => a.trim());
+  }
 
   private searchForViolations(
     table: powerbi.DataViewTable,
